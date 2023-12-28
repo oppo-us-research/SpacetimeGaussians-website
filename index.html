@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Spacetime Gaussian Feature Splatting for Real-Time Dynamic View Synthesis">
+  <meta name="keywords" content="neural fields, 6DoF, Novel View Synthesis, MR/XR, computer vision">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spacetime Gaussian Feature Splatting for Real-Time Dynamic View Synthesis</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/before_after.css">
+  <!-- <link rel="icon" href="./static/images/cameraicon.svg"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <link rel="stylesheet" href="./static/css/magnify.css">
+  <script src="./static/js/jquery-2.2.4.min.js"></script>
+  <script src="./static/js/jquery.magnify.js"></script>
+
+  <script src="twentytwenty/js/jquery-3.2.1.min.js" defer type="text/javascript"></script>
+  <script src="twentytwenty/js/jquery.event.move.js" defer type="text/javascript"></script>
+  <script src="twentytwenty/js/jquery.twentytwenty.js" defer type="text/javascript"></script>
+  <link rel="stylesheet" href="twentytwenty/css/twentytwenty.css" type="text/css" media="screen" />
+</head>
+
+<body>
+
+
+
+
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://oppo-us-research.github.io/OPPO_US_Research_Center_XR_Team">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Spacetime Gaussian Feature Splatting for Real-Time Dynamic View Synthesis</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/zhan-li-cv">Zhan Li</a><sup>1,2</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://zhangchen8.github.io">Zhang Chen</a><sup>1,&#8224</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://sites.google.com/site/lizhong19900216">Zhong Li</a><sup>1,&#8224</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/yi-xu-42654823">Yi Xu</a><sup>1</sup>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+
+            <span class="author-block"><sup>1</sup>OPPO US Research Center &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span class="author-block"><sup>2</sup>Portland State University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <p>&nbsp;</p>
+            <sup>1&nbsp;</sup>
+            <a href="https://github.com/oppo-us-research/"><img style="width:15%; padding-right: 15px;" src="./static/images/oppo_logo.png"></a>
+            <sup>2</sup>
+            <a href="https://www.pdx.edu/"><img style="width:18%; padding-right: 15px;" src="./static/images/pdx_logov2.png"></a>
+            <!-- <h2 class="title is-3">ICCV 2023 (Oral Presentation)</h2> -->
+            <!-- <p>&nbsp;</p> -->
+            <br>
+            <span class="author-block"><sup>&#8224</sup><small>Corresponding authors</small></span>
+          </div>
+          <br>
+          <!-- <p>&nbsp;</p> -->
+          <script>
+            $(document).ready(function() {
+              // var $zoom = $('.zoom').magnify(
+              // //   {
+              // //   magnifiedWidth: 1000,
+              // //   magnifiedHeight: 753
+              // // }
+              // );
+              // $zoom.destroy();
+            });
+          </script>
+<style>
+.magnify > .magnify-lens {
+  width: 130px;
+  height: 130px;
+}
+</style>
+
+<style>
+  /* Style the buttons */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+  
+  /* Style the active class, and buttons on mouse-over */
+  .active, .btn:hover {
+    background-color: #666;
+    color: white;
+  }
+
+  /* .twentytwenty-container {
+    min-height: 200px;
+} */
+
+  </style>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2309.15426.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2309.15426"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://youtu.be/lqZ2FPktj3g"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/oppo-us-research/SpacetimeGaussians"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code and Viewer </span>
+                  </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a> -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-img_pearl">
+          <video poster="" id="img_pearl" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/02flamegif.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-img_pearl">
+          <video poster="" id="sdf_mechanism" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/birthdaygif.mp4" 
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-img_pearl">
+          <video poster="" id="nerf_syn_materials" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/searsteakrawgif.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-nerf_llff_horns">
+          <video poster="" id="nerf_llff_horns" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/02flame264.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-img_pluto">
+          <video poster="" id="img_pluto" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/birthdaysmall.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-sdf_david">
+          <video poster="" id="sdf_david" autoplay controls muted loop playsinline height="100%">
+            <source src="./videos/searsteakmv.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+      </div>
+    </div>
+    <div  class="columns is-centered has-text-centered" style="text-align: center;">  
+       <p><br/>Real-time interactive demo and spiral path rendering. Scenes are from Google Immersive [1], Technicolor [2], and Neural 3D Video [3] datasets.</br> <small>*The visualization of the Gaussians is inspired by Luma AI.</small></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Novel view synthesis of dynamic scenes has been an intriguing yet challenging problem.
+          Despite recent advancements, simultaneously achieving high-resolution photorealistic results, real-time rendering, and compact storage remains a formidable task.
+          To address these challenges, we propose Spacetime Gaussian Feature Splatting as a novel dynamic scene representation, composed of three pivotal components.</p>
+          <p>
+          First, we formulate expressive Spacetime Gaussians by enhancing 3D Gaussians with temporal opacity and parametric motion/rotation.
+          This enables Spacetime Gaussians to capture static, dynamic, as well as transient content within a scene.
+          Second, we introduce splatted feature rendering, which replaces spherical harmonics with neural features.
+          These features facilitate the modeling of view- and time-dependent appearance while maintaining small size.
+          Third, we leverage the guidance of training error and coarse depth to sample new Gaussians in areas that are challenging to converge with existing pipelines.</p> <p>
+          Experiments on several established real-world datasets demonstrate that our method achieves state-of-the-art rendering quality and speed, while retaining compact storage.
+          At 8K resolution, our lite-version model can render at 60 FPS on an Nvidia RTX 4090 GPU.</p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+    <!-- Paper video. -->
+    <br>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/lqZ2FPktj3g" title="YouTube video player" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <p>&nbsp;</p>
+          <h2 class="title is-3">Real-Time 8K Demo</h2>
+          <center>
+          <video poster="" id="img_shibuya" autoplay controls muted loop playsinline width="100%">
+            <source src="./videos/realtimedemo1cropscale.mp4"
+                    type="video/mp4">
+          </video>
+          </center>
+
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <center>
+            <img src="./static/images/methodv2.png"  width="1000">
+          </center><br>
+          (a) Our method leverages a set of <b>Spacetime Gaussians</b> (STG) to represent the dynamic scenes. On top of 3D Gaussian [4], each STG is further equipped with <b>temporal opacity</b>, <b>polynomial motion/rotation</b> and <b>time-dependent features</b>.
+          (b) The features are splatted into 2D image plane and then converted to color image via MLP.
+          <br> 
+          <br> 
+        <center>
+          <img src="./static/images/ems.png"  width="1000">
+        </center>
+        We also observe that areas which have sparse Gaussians at initialization are challenging to converge to high rendering quality.
+        Therefore, we introduce a strategy to sample new Gaussians with the guidance of training error and coarse depth.
+        We sample new Gaussians along the rays of pixels that have large errors during training. 
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Results</h2>
+        <div class="content has-text-justified">
+          <center>
+            <img src="./static/images/result.png"  width="600">
+          </center>
+          On the Neural 3D Video dataset [3], our method achieves state-of-the-art rendering quality and speed, while retaining compact storage.
+          <style>
+            .grid-container {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr); /* Creates 2 columns with equal width */
+              grid-gap: 10px; /* Adjust the gap between the divs */
+            }
+            .grid-item {
+              width: 100%;
+            }
+          </style>
+
+          <br>
+
+          <h3 class="title is-4">Visual comparisons with other methods</h3>
+
+          <!--/ Paper video. -->
+
+          <div class="grid-container">
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-right: 20px; ">
+                <img class="slider-image" style="width: 467px" src="./static/images/coffee/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/coffee/crop/dy3dgs_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; ">
+                <img class="slider-image" style="width: 467px" src="./static/images/flamesteak/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/flamesteak/crop/kplane_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 295px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>Dynamic 3DGS [5]</b></span>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 335px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>K-Planes [6]</b></span>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="grid-container">
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-right: 20px;  margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/flamesalmon/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/flamesalmon/crop/hexplane_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="compare" style="width: 467px;  margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/searsteak/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/searsteak/crop/mixvoxelL_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 335px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>HexPlane [7]</b></span>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 310px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>MixVoxels-L [8]</b></span>
+              </div>
+            </div>
+          </div>
+          <!--/ Paper video. -->
+
+          <div class="grid-container">
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-right: 20px; margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/11alex/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/11alex/crop/hp_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/02flame/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/02flame/crop/player_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 330px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>HyperReel [9]</b></span>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 305px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>NeRFplayer [10]</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!--/ techni. -->
+
+          <div class="grid-container">
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-right: 20px;  margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/fabien/ours.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/fabien/hp.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="compare" style="width: 467px;margin-top: 10px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/techni_painter/crop/ours_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/techni_painter/crop/hp_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 330px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>HyperReel [9]</b></span>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 322px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>HyperReel [9]</b></span>
+              </div>
+            </div>
+          </div>
+          <!--/ techni. -->
+
+
+
+          <h3 class="title is-4">Ablation on guided sampling</h3>
+
+          <div class="grid-container">
+            <div class="grid-item">
+              <div class="compare" style="width: 467px; margin-right: 20px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/ems1/crop/ouswithguided_cropped.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/ems1/crop/ouswithoutguid_cropped.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div class="compare" style="width: 467px;">
+                <img class="slider-image" style="width: 467px" src="./static/images/ems2/ouswithguided.png" />
+                <img class="slider-image" style="width: 467px" src="./static/images/ems2/ouswithoutguid.png" />
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 200px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>Ours without guided sampling</b></span>
+              </div>
+            </div>
+            <div class="grid-item">
+              <div>
+                <span style="display: inline; text-align: left; margin-right: 195px;"><b>Ours</b></span>
+                <span style="display: inline; text-align: right;"><b>Ours without guided sampling</b></span>
+              </div>
+            </div>
+          </div>
+
+          <!--/ EMS -->
+          <h3 class="title is-4">Comparisons on temporal consistency</h3>
+          <center>
+            <img src="./static/images/comparetemporal.png"width="1000">          
+          </center>
+          <body><center>
+          From the test view video results of each method, we take a vertical column of 150 pixels across 250 frames and concatenate these columns horizontally. The resulting image patch is equivalent to a slice in the height-time space.
+          Ours results are clearer than Dynamic 3DGS [5] and contain fewer temporal noises.</center><br/></body>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title" style="text-align: center;">BibTeX</h2>
+    <pre><code>@article{li2023spacetime,
+  title={Spacetime Gaussian Feature Splatting for Real-Time Dynamic View Synthesis},
+  author={Zhan Li, Cheng Zhang, Zhong Li and Yi Xu},
+  journal={arXiv preprint arXiv:xxxxx},
+  year={2023}
+}</code></pre>
+<p>&nbsp;</p>
+</div>
+<div class="container is-max-desktop content">
+  <h2 class="title" style="text-align: center;">References</h2>
+  [1] Michael Broxton, John Flynn, Ryan Overbeck, Daniel Erickson, Peter Hedman, Matthew DuVall, Jason Dourgarian, Jay Busch, Matt Whalen, and Paul Debevec. <em>Immersive Light Field Video with a Layered Mesh Representation</em>. ACM Transactions on Graphics, 2020.<br/>
+  [2] Neus Sabater, Guillaume Boisson, Benoit Vandame, Paul Kerbiriou, Frederic Babon, Matthieu Hog, Remy Gendrot, Tristan Langlois, Olivier Bureller, Arno Schubert, et al. <em>Dataset and pipeline for multi-view light-field video</em>. In Proceedings of the IEEE conference on computer vision and pattern recognition Workshops, 2017.<br>
+  [3] Tianye Li, Mira Slavcheva, Michael Zollhoefer, Simon Green, Christoph Lassner, Changil Kim, Tanner Schmidt, Steven Lovegrove, Michael Goesele, Richard Newcombe, et al. <em>Neural 3d video synthesis from multi-view video</em>. In
+  Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2022.<br/>
+  [4] Bernhard Kerbl, Georgios Kopanas, Thomas Leimkühler, and George Drettakis. <em>3d gaussian splatting for real-time radiance field rendering</em>. ACM Transactions on Graphics
+  (TOG), 2023. <br/>
+  [5] Jonathon Luiten, Georgios Kopanas, Bastian Leibe, and Deva Ramanan. <em>Dynamic 3d gaussians: Tracking by persistent dynamic view synthesis</em>. In 3DV, 2024. <br/>
+  [6] Sara Fridovich-Keil, Giacomo Meanti, Frederik Rahbæk Warburg, Benjamin Recht, and Angjoo Kanazawa. <em>K-planes: Explicit radiance fields in space, time, and appearance</em>. In
+  Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2023. <br/>
+  [7] Ang Cao and Justin Johnson. <em>Hexplane: A fast representation for dynamic scenes</em>. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 2023. <br/>
+  [8] Feng Wang, Sinan Tan, Xinghang Li, Zeyue Tian, Yafei Song, and Huaping Liu. <em>Mixed neural voxels for fast multiview video synthesis</em>. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), 2023. <br/>
+  [9] Benjamin Attal, Jia-Bin Huang, Christian Richardt, Michael Zollhoefer, Johannes Kopf, Matthew O’Toole, and Changil Kim. <em>HyperReel: High-fidelity 6-DoF video with rayconditioned sampling</em>. In Conference on Computer Vision and Pattern Recognition (CVPR), 2023. <br/>
+  [10] Liangchen Song, Anpei Chen, Zhong Li, Zhang Chen, Lele
+  Chen, Junsong Yuan, Yi Xu, and Andreas Geiger. <em>Nerfplayer: A streamable dynamic scene representation with decomposed neural radiance fields</em>. IEEE Transactions on Visualization and Computer Graphics, 2023. <br/>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/oppo-us-research/SpacetimeGaussians" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This great website template was borrowed from <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies</a>, <a
+              href="https://github.com/defocus-control/defocus-control.github.io">DC<sup>2</sup></a> and <a
+              href="https://github.com/oppo-us-research/NeuRBF-website">NeuRBF</a> !
+          </p>
+          <!-- <p>
+            The visualiation of the Spacetime Gaussians is inspired from visualization of 3D Gaussians from <a
+              href="https://lumalabs.ai/">Luma AI</a>.
+          </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
